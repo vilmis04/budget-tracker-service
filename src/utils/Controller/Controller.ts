@@ -6,10 +6,10 @@ export abstract class Controller {
   constructor(
     private app: Router,
     protected router: Router,
-    private prefix: string
+    private prefix: string,
   ) {}
 
-  public use() {
+  public use(): void {
     this.registerRoutes();
     this.app.use(this.prefix, this.router);
   }

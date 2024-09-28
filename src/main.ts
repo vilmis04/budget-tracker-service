@@ -4,6 +4,7 @@ import swaggerUi from "swagger-ui-express";
 import swaggerDocument from "../swagger.json" with { type: "json" };
 import { TransactionController } from "./transaction/controller.ts";
 import { getEnvVariable } from "./utils/env.ts";
+import { logger } from "./utils/logger.ts";
 
 const PORT = getEnvVariable("PORT", "8000");
 
@@ -26,5 +27,5 @@ new TransactionController(router, express.Router()).use();
 
 app.use("/api", router);
 
-console.log(`Listening on port ${PORT}`);
+logger.info(`Listening on port ${PORT}`);
 app.listen(PORT);

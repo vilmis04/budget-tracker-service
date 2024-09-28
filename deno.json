@@ -9,5 +9,33 @@
     "compile": "deno compile --target x86_64-unknown-linux-gnu -A --output ./bin/budget-tracker-service ./src/main.ts",
     "logs:service": "docker logs -f budget-service",
     "logs:auth": "docker logs -f auth-proxy-budget-service"
+  },
+  "lint": {
+    "rules": {
+      "tags": ["recommended"],
+      "include": [
+        "camelCase",
+        "default-param-last",
+        "eqeqeq",
+        "explicit-function-return-type",
+        "explicit-module-boundary-types",
+        "guard-for-in",
+        "no-await-in-loop",
+        "no-boolean-literal-for-arguments",
+        "no-console",
+        "no-const-assign",
+        "no-eval",
+        "no-implicit-declare-namespace-export",
+        "no-non-null-asserted-optional-chain",
+        "no-non-null-assertion",
+        "no-self-compare",
+        "no-sparse-arrays",
+        "no-throw-literal",
+        "no-undef",
+        "prefer-ascii",
+        "single-var-declarator",
+        "triple-slash-reference"
+      ]
+    }
   }
 }

@@ -1,7 +1,9 @@
+import type { Transaction } from "./model.ts";
+
 export class TransactionService {
   constructor() {}
 
-  public getTransactions() {
-    return ["transaction1", "transaction2"];
+  public getAll(): Transaction[] {
+    return [];
   }
 }

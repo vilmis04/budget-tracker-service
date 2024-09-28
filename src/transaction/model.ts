@@ -1,57 +1,71 @@
 import type { TransactionType } from "./types.ts";
 
 export class Transaction {
-  private id: string | null = null;
-  private dateCreated: Date;
-  private dateModified: Date;
-  private description: string | null = null;
+  constructor(
+    private id: string,
+    private dateCreated: Date,
+    private dateModified: Date,
+    private description: string | null,
+    private amount: number,
+    private type: TransactionType,
+    private userId: string,
+    private category: string,
+    private subcategory: string | null,
+  ) {}
 
-  constructor(private amount: number, private type: TransactionType) {
-    this.dateCreated = new Date();
-    this.dateModified = new Date();
-  }
-
-  public getId() {
+  public getId(): string | null {
     return this.id;
   }
 
-  public getAmount() {
+  public getUserId(): string {
+    return this.userId;
+  }
+
+  public getAmount(): number {
     return this.amount;
   }
 
-  public getType() {
+  public getType(): TransactionType {
     return this.type;
   }
 
-  public getDateCreated() {
+  public getCategory(): string {
+    return this.category;
+  }
+
+  public getSubcategory(): string | null {
+    return this.subcategory;
+  }
+
+  public getDateCreated(): Date {
     return this.dateCreated;
   }
 
-  public getDateModified() {
+  public getDateModified(): Date {
     return this.dateModified;
   }
 
-  public getDescription() {
+  public getDescription(): string | null {
     return this.description;
   }
 
-  public setDateModified() {
-    this.dateModified = new Date();
-  }
-
-  public setAmount(amount: number) {
+  public setAmount(amount: number): void {
     this.amount = amount;
   }
 
-  public setType(type: TransactionType) {
+  public setType(type: TransactionType): void {
     this.type = type;
   }
 
-  public setDescription(description: string) {
+  public setDescription(description: string): void {
     this.description = description;
   }
 
-  public setId(id: string) {
-    this.id = id;
+  public setCategory(category: string): void {
+    this.category = category;
+  }
+
+  public setSubcategory(subcategory: string): void {
+    this.subcategory = subcategory;
   }
 }
