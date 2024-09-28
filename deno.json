@@ -1,0 +1,13 @@
+{
+  "tasks": {
+    "run": "deno run -A ./src/main.ts",
+    "start": "docker compose up -d && docker exec -it budget-service deno task run",
+    "start:only": "docker compose up -d",
+    "start:attach": "docker compose up -d && docker exec -it budget-service sh",
+    "attach": "docker exec -it budget-service sh",
+    "stop": "docker compose down",
+    "compile": "deno compile --target x86_64-unknown-linux-gnu -A --output ./bin/budget-tracker-service ./src/main.ts",
+    "logs:service": "docker logs -f budget-service",
+    "logs:auth": "docker logs -f auth-proxy-budget-service"
+  }
+}

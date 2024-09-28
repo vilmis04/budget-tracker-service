@@ -1,0 +1,58 @@
+services:
+  budget-service:
+    container_name: budget-service
+    # build: .
+    image: denoland/deno:2.0.0-rc.7
+    tty: true
+    working_dir: /code
+    restart: always
+    ports:
+      - "4200:4200"
+    env_file:
+      - .env
+    volumes:
+      - .:/code
+    # for local development
+    entrypoint: sh
+    # entrypoint: deno task run
+
+  auth-proxy:
+    container_name: auth-proxy-budget-service
+    # image: auth-proxy-img
+    build: ../../auth-proxy/feat-auth-proxy
+    tty: true
+    restart: always
+    ports:
+      - "4300:4300"
+    env_file:
+      - .env.auth
+
+
+  # client:
+  #   container_name: client
+  #   image: vsud/ev-game:client-2.1.1
+  #   tty: true
+  #   restart: always
+  #   ports:
+  #     - "3300:3300"
+
+  db:
+    container_name: postgres-budget-service
+    image: postgres:16-alpine
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  admin:
+    container_name: admin-budget-service
+    image: adminer
+    restart: always
+    ports:
+      - 5555:8080
+
+volumes:
+  pgdata:
