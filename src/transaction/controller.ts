@@ -1,6 +1,7 @@
 import type { Router } from "express";
 import { TransactionService } from "./service.ts";
 import { Controller } from "../utils/Controller/Controller.ts";
+import { ErrorHandler } from "../utils/ErrorHandler/ErrorHandler.ts";
 
 export class TransactionController extends Controller {
   private service = new TransactionService();
@@ -10,9 +11,49 @@ export class TransactionController extends Controller {
   }
 
   registerRoutes(): void {
-    this.router.get("/", (_req, res) => {
-      const result = this.service.getAll();
-      res.send(result);
+    this.get("/", (_req, res) => {
+      const [error, list] = this.service.getAll();
+      if (error) {
+        ErrorHandler.send(error, res);
+        return;
+      }
+      res.send(list);
+    });
+
+    this.get("/:id", (req, res) => {
+      const [error, list] = this.service.get(req.params.id);
+      if (error) {
+        ErrorHandler.send(error.forward(this.prefix), res);
+        return;
+      }
+      res.send(list);
+    });
+
+    this.post("/", (req, res) => {
+      const [error, list] = this.service.create(req.body);
+      if (error) {
+        ErrorHandler.send(error, res);
+        return;
+      }
+      res.send(list);
+    });
+
+    this.put("/:id", (req, res) => {
+      const [error, list] = this.service.update(req.params.id, req.body);
+      if (error) {
+        ErrorHandler.send(error.forward(this.prefix), res);
+        return;
+      }
+      res.send(list);
+    });
+
+    this.delete("/:id", (req, res) => {
+      const [error, list] = this.service.delete(req.params.id);
+      if (error) {
+        ErrorHandler.send(error.forward(this.prefix), res);
+        return;
+      }
+      res.send(list);
     });
   }
 }
