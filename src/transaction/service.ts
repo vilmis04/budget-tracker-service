@@ -22,7 +22,10 @@ export class TransactionService {
     ];
   }
 
-  public create(_transactionDto: CreateTransactionDto): ErrFirst<Transaction> {
+  public create(
+    _username: string,
+    _transactionDto: CreateTransactionDto,
+  ): ErrFirst<Transaction> {
     return [
       ErrorHandler.build(HttpStatus.NOT_IMPLEMENTED),
       null,

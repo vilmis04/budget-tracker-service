@@ -2,6 +2,8 @@ import type { Router } from "express";
 import { TransactionService } from "./service.ts";
 import { Controller } from "../utils/Controller/Controller.ts";
 import { ErrorHandler } from "../utils/ErrorHandler/ErrorHandler.ts";
+import { HttpHandler } from "../utils/HttpHandler/HttpHandler.ts";
+import { HttpStatus } from "../utils/ErrorHandler/HttpStatus.ts";
 
 export class TransactionController extends Controller {
   private service = new TransactionService();
@@ -30,12 +32,18 @@ export class TransactionController extends Controller {
     });
 
     this.post("/", (req, res) => {
-      const [error, list] = this.service.create(req.body);
+      const [authError, username] = HttpHandler.getUser(req);
+      if (authError) {
+        ErrorHandler.send(authError, res);
+        return;
+      }
+
+      const [error, list] = this.service.create(username, req.body);
       if (error) {
         ErrorHandler.send(error, res);
         return;
       }
-      res.send(list);
+      res.status(HttpStatus.CREATED).send(list);
     });
 
     this.put("/:id", (req, res) => {

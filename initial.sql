@@ -8,6 +8,15 @@ CREATE TABLE "auth" (
 );
 
 -- CreateTable
+CREATE TABLE "user" (
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "userId" TEXT NOT NULL,
+    "transactionApiKey" UUID NOT NULL DEFAULT gen_random_uuid(),
+
+    CONSTRAINT "user_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "transaction" (
     "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "amount" INTEGER NOT NULL,
@@ -24,6 +33,12 @@ CREATE TABLE "transaction" (
 -- CreateIndex
 CREATE UNIQUE INDEX "auth_username_key" ON "auth"("username");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "user_transactionApiKey_key" ON "user"("transactionApiKey");
+
 -- AddForeignKey
-ALTER TABLE "transaction" ADD CONSTRAINT "transaction_userId_fkey" FOREIGN KEY ("userId") REFERENCES "auth"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "user" ADD CONSTRAINT "user_userId_fkey" FOREIGN KEY ("userId") REFERENCES "auth"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "transaction" ADD CONSTRAINT "transaction_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 

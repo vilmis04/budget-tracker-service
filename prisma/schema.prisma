@@ -8,10 +8,18 @@ datasource db {
 }
 
 model auth {
-  id          String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  username    String        @unique @db.VarChar(50)
-  password    String
-  transaction transaction[]
+  id       String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  username String @unique @db.VarChar(50)
+  password String
+  user     user[]
+}
+
+model user {
+  id                String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  auth              auth          @relation(fields: [userId], references: [id])
+  userId            String
+  transaction       transaction[]
+  transactionApiKey String        @unique @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 }
 
 model transaction {
@@ -22,6 +30,6 @@ model transaction {
   category      String
   subcategory   String
   description   String
-  user          auth     @relation(fields: [userId], references: [id])
+  user          user     @relation(fields: [userId], references: [id])
   userId        String
 }

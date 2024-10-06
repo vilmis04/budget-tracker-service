@@ -19,3 +19,7 @@ Inside the container run `deno task run`
 ## Compile
 
 Run `deno compile --target x86_64-unknown-linux-gnu -A --output ./bin/budget-tracker-service ./src/main.ts`
+
+## Project info
+
+https://www.notion.so/Roadmap-1179c45a302d8014aadee70e2d49e764
